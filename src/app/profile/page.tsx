@@ -4,6 +4,7 @@ import { withAuth } from "../components/withAuth";
 import { useAuthContext } from "../contexts/AuthContext";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { Button } from "antd/es/radio";
 
 const ProfilePage = () => {
   const { user, signOut } = useAuthContext();
@@ -35,7 +36,7 @@ const ProfilePage = () => {
           )}
         </div>
       )}
-      <button onClick={handleSignOut}>Sign Out</button>
+      <Button onClick={handleSignOut}>Sign Out</Button>
     </div>
   );
 };
