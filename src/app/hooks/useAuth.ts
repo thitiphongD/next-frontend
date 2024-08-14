@@ -28,6 +28,7 @@ export const useAuth = () => {
           email: data.email,
           name: data.name,
           profileImage: data.profileImage,
+          role: data.role,
           token: data.token,
         };
         localStorage.setItem("user", JSON.stringify(userData));
