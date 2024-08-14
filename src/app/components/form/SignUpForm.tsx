@@ -1,5 +1,6 @@
+import { signUpService } from "@/app/services/authService";
 import { SignUpType } from "@/app/types/auth";
-import { Button, Form, FormProps, Input } from "antd";
+import { Button, Form, Input, Modal } from "antd";
 import React from "react";
 
 interface Props {
@@ -7,8 +8,29 @@ interface Props {
 }
 
 const SignUpForm: React.FC<Props> = ({ onBack }) => {
-  const onFinish = (values: SignUpType) => {
-    console.log("Received values of form: ", values);
+  const SignUpSuccess = () => {
+    Modal.success({
+      content: "Sign up Success!!",
+      onOk() {
+        onBack();
+      },
+    });
+  };
+
+  const onFinish = async (values: SignUpType): Promise<void> => {
+    try {
+      console.log("Received values of form:", values);
+      const data = await signUpService(
+        values.email,
+        values.password,
+        values.confirmPassword
+      );
+      if (data.code === 201) {
+        SignUpSuccess();
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
   };
 
   return (

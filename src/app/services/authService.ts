@@ -13,7 +13,29 @@ export const signInService = async (email: string, password: string) => {
 
   if (!response.ok) {
     const errorData = await response.json();
-    throw new Error(errorData.message || "Login failed");
+    throw new Error(errorData.message || "Sign In failed");
+  }
+
+  return await response.json();
+};
+
+export const signUpService = async (
+  email: string,
+  password: string,
+  confirmPassword: string
+) => {
+  const url = API_URL("signUp");
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email, password, confirmPassword }),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || "Sign Up failed");
   }
 
   return await response.json();
