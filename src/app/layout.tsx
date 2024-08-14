@@ -20,10 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <AuthProviderWrapper>
-          <div className="flex">
-            <Navbar />
-            <main className="flex-grow">{children}</main>
-          </div>
+          <main>{children}</main>
         </AuthProviderWrapper>
       </body>
     </html>

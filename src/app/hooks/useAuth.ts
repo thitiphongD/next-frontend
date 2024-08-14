@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { User } from "../types/auth";
 import { signInService } from "../services/authService";
+import { useRouter } from "next/navigation";
 
 export const useAuth = () => {
   const [user, setUser] = useState<User | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const router = useRouter();
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -20,7 +22,7 @@ export const useAuth = () => {
     }
   }, []);
 
-  const signIn = async (email: string, password: string): Promise<void> => {
+  const signIn = async (email: string, password: string) => {
     try {
       const data = await signInService(email, password);
       if (data.code === 200) {
