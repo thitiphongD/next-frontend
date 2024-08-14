@@ -18,7 +18,7 @@ export interface User {
   email: string;
   name: string | null;
   profileImage: string | null;
-  role: string;
+  role: "member" | "admin";
   token: string;
 }
 
