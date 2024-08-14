@@ -2,13 +2,13 @@ import { SignUpType } from "@/app/types/auth";
 import { Button, Form, FormProps, Input } from "antd";
 import React from "react";
 
-type Props = {
+interface Props {
   onBack: () => void;
-};
+}
 
-const SignUpForm = (props: Props) => {
-  const onFinish: FormProps<SignUpType>["onFinish"] = (values) => {
-    console.log("Success:", values);
+const SignUpForm: React.FC<Props> = ({ onBack }) => {
+  const onFinish = (values: SignUpType) => {
+    console.log("Received values of form: ", values);
   };
 
   return (
@@ -38,7 +38,7 @@ const SignUpForm = (props: Props) => {
         <Input.Password />
       </Form.Item>
 
-      <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+      <Form.Item>
         <Button type="primary" htmlType="submit">
           Submit
         </Button>

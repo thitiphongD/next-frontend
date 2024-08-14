@@ -1,23 +1,32 @@
+import { signInService } from "@/app/services/authService";
 import { SignInType } from "@/app/types/auth";
 import { Button, Form, FormProps, Input } from "antd";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 const SignInForm = () => {
-  const onFinish: FormProps<SignInType>["onFinish"] = (values) => {
-    console.log("Success:", values);
+  const router = useRouter();
+
+  const onFinish = async (values: SignInType) => {
+    const data = await signInService(values.email, values.password);
+
+    // if (data.code === 200) {
+    //   localStorage.setItem("user", JSON.stringify(data.user));
+    //   router.push("/profile");
+    // }
   };
 
   return (
-    <Form name="basic" onFinish={onFinish}>
-      <Form.Item<SignInType>
+    <Form name="basic" onFinish={onFinish} layout="vertical">
+      <Form.Item
         label="Email"
         name="email"
-        rules={[{ required: true, message: "Please input your username!" }]}
+        rules={[{ required: true, message: "Please input your email!" }]}
       >
         <Input />
       </Form.Item>
 
-      <Form.Item<SignInType>
+      <Form.Item
         label="Password"
         name="password"
         rules={[{ required: true, message: "Please input your password!" }]}
@@ -25,7 +34,7 @@ const SignInForm = () => {
         <Input.Password />
       </Form.Item>
 
-      <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+      <Form.Item>
         <Button type="primary" htmlType="submit">
           Submit
         </Button>
