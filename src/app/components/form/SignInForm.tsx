@@ -1,16 +1,30 @@
-import { useAuthContext } from "@/app/contexts/AuthContext";
+"use client";
+
+import React from "react";
 import { SignInType } from "@/app/types/auth";
 import { Button, Form, Input } from "antd";
 import { useRouter } from "next/navigation";
-import React from "react";
+import { signIn } from "next-auth/react";
 
-const SignInForm = () => {
+const SignInForm: React.FC = () => {
   const router = useRouter();
-  const { signIn } = useAuthContext();
 
   const onFinish = async (values: SignInType) => {
-    await signIn(values.email, values.password);
-    router.push("/profile");
+    try {
+      const result = await signIn("credentials", {
+        redirect: false,
+        email: values.email,
+        password: values.password,
+      });
+
+      if (result?.ok) {
+        router.push("/profile");
+      } else {
+        console.error("Sign in failed", result?.error);
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
   };
 
   return (
